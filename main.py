@@ -12,7 +12,7 @@ from sklearn import svm
 
 
 class PinPredict(BaseModel):
-    model_id: str
+    user_id: str
     data:List[str]= []
 
 class PinTrain(BaseModel):
@@ -42,7 +42,7 @@ async def predict(*, pinp:PinPredict ):
     
 
     #Load Model
-    PATH_MODE = "./models/"+pinp.model_id+".pkl"
+    PATH_MODE = "./models/"+pinp.user_id+".pkl"
     model = load(PATH_MODE) 
     predict =  model.predict(x)[0]
     return {"real":int(predict)}
