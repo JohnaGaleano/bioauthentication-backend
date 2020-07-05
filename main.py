@@ -6,8 +6,7 @@ from joblib import dump, load
 from sklearn.preprocessing import StandardScaler # for preprocessing the data
 import uuid
 from sklearn.ensemble import IsolationForest
-from sklearn import svm  
-
+from sklearn import svm 
 
 
 
@@ -39,10 +38,18 @@ async def predict(*, pinp:PinPredict ):
     
     #ReSize
     x = x.reshape(1,x.shape[0])
+    print("Before Scaler: ", x)
+    #Load Scaler
+    PATH_SCALER = "./scalers/pin/"+pinp.user_id
+    print(PATH_SCALER)
+    scaler = load(PATH_SCALER)
     
+    #Apply scaler
+    x = scaler.transform(x)
+    print("Scaler: ", x)
 
     #Load Model
-    PATH_MODE = "./models/"+pinp.user_id+".pkl"
+    PATH_MODE = "./models/pin/"+pinp.user_id+".pkl"
     model = load(PATH_MODE) 
     predict =  model.predict(x)[0]
     return {"real":int(predict)}
