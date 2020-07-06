@@ -45,8 +45,8 @@ async def predict(*, pinp:PinPredict ):
     scaler = load(PATH_SCALER)
     
     #Apply scaler
-    x = scaler.transform(x)
-    print("Scaler: ", x)
+    # x = scaler.transform(x)
+    # print("Scaler: ", x)
 
     #Load Model
     PATH_MODE = "./models/pin/"+pinp.user_id+".pkl"
