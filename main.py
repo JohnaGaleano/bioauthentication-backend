@@ -54,7 +54,32 @@ async def predict(*, pinp:PinPredict ):
     predict =  model.predict(x)[0]
     return {"real":int(predict)}
 
+@app.post("/predict/pattern")
+async def predict(*, pinp:PinPredict ):    
+    #Data transform
+    x = np.array(pinp.data)
+    x = x.astype(np.float)
+    
+    #Normalization
+    #PASO EXTRA    
+    
+    #ReSize
+    x = x.reshape(1,x.shape[0])
+    print("Before Scaler: ", x)
+    #Load Scaler
+    PATH_SCALER = "./scalers/pattern/"+pinp.user_id
+    print(PATH_SCALER)
+    scaler = load(PATH_SCALER)
+    
+    #Apply scaler
+    x = scaler.transform(x)
+    print("Scaler: ", x)
 
+    #Load Model
+    PATH_MODE = "./models/pattern/"+pinp.user_id+".pkl"
+    model = load(PATH_MODE) 
+    predict =  model.predict(x)[0]
+    return {"real":int(predict)}
 
 
 @app.post("/train/pin")
