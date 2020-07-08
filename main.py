@@ -52,6 +52,7 @@ async def predict(*, pinp:PinPredict ):
     PATH_MODE = "./models/pin/"+pinp.user_id+".pkl"
     model = load(PATH_MODE) 
     predict =  model.predict(x)[0]
+    print(predict)
     return {"real":int(predict)}
 
 @app.post("/predict/pattern")
@@ -79,6 +80,7 @@ async def predict(*, pinp:PinPredict ):
     PATH_MODE = "./models/pattern/"+pinp.user_id+".pkl"
     model = load(PATH_MODE) 
     predict =  model.predict(x)[0]
+    print(predict)
     return {"real":int(predict)}
 
 
